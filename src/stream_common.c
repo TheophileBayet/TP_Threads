@@ -7,7 +7,7 @@
 #include <pthread.h>
 
 bool fini = false;
-
+pthread_mutex_t mut ;
 
 struct timespec datedebut;
 
@@ -66,15 +66,16 @@ struct streamstate *getStreamState(ogg_sync_state *pstate, ogg_page *ppage,
 	assert(res == 0);
 
 	// proteger l'accès à la hashmap
-
+  pthread_mutex_lock(&mut);
+  {
 	if (type == TYPE_THEORA)
 	    HASH_ADD_INT( theorastrstate, serial, s );
 	else
 	    HASH_ADD_INT( vorbisstrstate, serial, s );
-
+  }
+  pthread_mutex_unlock(&mut);
     } else {
 	// proteger l'accès à la hashmap
-
 	if (type == TYPE_THEORA)
 	    HASH_FIND_INT( theorastrstate, & serial, s );
 	else
