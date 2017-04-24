@@ -4,7 +4,7 @@
 #include "ensivideo.h"
 
 extern bool fini;
-extern pthread_mutex_t mut;
+
 extern pthread_t theora2sdlthread;
 extern struct timespec datedebut;
 

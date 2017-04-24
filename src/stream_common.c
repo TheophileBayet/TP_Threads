@@ -7,7 +7,7 @@
 #include <pthread.h>
 
 bool fini = false;
-pthread_mutex_t mut ;
+
 
 struct timespec datedebut;
 
@@ -144,6 +144,7 @@ int decodeAllHeaders(int respac, struct streamstate *s, enum streamtype type) {
 		// lancement du thread gérant l'affichage (draw2SDL)
     pthread_t t1;
     pthread_create(&t1,NULL,draw2SDL,&(s->serial));
+    printf(" pthread_create draw2SDL \n");
 	        // inserer votre code ici !!
 
 		assert(res == 0);

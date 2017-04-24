@@ -5,7 +5,7 @@
 #include "ensitheora.h"
 
 extern bool fini;
-
+extern pthread_mutex_t mut;
 
 /* Les extern des variables pour la synchro ici */
 

@@ -28,8 +28,9 @@ int main(int argc, char *argv[]) {
     pthread_t t2;
 
     pthread_create(&t1,NULL,theoraStreamReader,argv[1]);
+    printf(" pthread_create theoraStreamReader \n");
     pthread_create(&t2,NULL,vorbisStreamReader,argv[1]);
-
+    printf(" pthread_create vorbisStreamReader \n");
 
     // wait audio thread
     pthread_join(t2,NULL);

@@ -24,9 +24,9 @@ void *draw2SDL(void *arg) {
     int serial = (int) (long long int) arg;
     struct streamstate *s= NULL;
     SDL_Texture* texture = NULL;
-
+    printf("   --------   draw pass 0      ---------  \n");
     attendreTailleFenetre();
-
+    printf("  ---------   draw pass 1      ---------  \n");
     // create SDL window (if not done) and renderer
     screen = SDL_CreateWindow("Ensimag lecteur ogg/theora/vorbis",
 			      SDL_WINDOWPOS_UNDEFINED,
@@ -36,6 +36,7 @@ void *draw2SDL(void *arg) {
 			      0);
     renderer = SDL_CreateRenderer(screen, -1, 0);
 
+    printf("  ---------   draw pass 2     ------------ \n");
     assert(screen);
     assert(renderer);
     // affichage en noir
@@ -43,7 +44,7 @@ void *draw2SDL(void *arg) {
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
 
-
+    printf("  ---------   draw pass 3     ------------ \n");
     // la texture
     texture = SDL_CreateTexture(renderer,
 					   SDL_PIXELFORMAT_YV12,
