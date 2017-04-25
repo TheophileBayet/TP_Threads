@@ -1,5 +1,7 @@
 #include <stdbool.h>
 #include <assert.h>
+#include <stdio.h>
+#include <unistd.h>
 #include <SDL2/SDL.h>
 #include "ensitheora.h"
 #include "synchro.h"
@@ -35,7 +37,6 @@ void *draw2SDL(void *arg) {
 			      windowsy,
 			      0);
     renderer = SDL_CreateRenderer(screen, -1, 0);
-
     printf("  ---------   draw pass 2     ------------ \n");
     assert(screen);
     assert(renderer);
@@ -52,7 +53,10 @@ void *draw2SDL(void *arg) {
 					   windowsx,
 					   windowsy);
 
+    printf("  ---------   draw pass 4     ------------ \n ");
+
     assert(texture);
+    printf("  ---------   draw pass 5     ------------ \n");
     // remplir les planes de TextureDate
     for(int i=0; i < NBTEX; i++) {
 	texturedate[i].plane[0] = malloc( windowsx * windowsy );
@@ -61,7 +65,7 @@ void *draw2SDL(void *arg) {
     }
 
     signalerFenetreEtTexturePrete();
-
+    printf("  ---------   draw pass 6     ------------ \n");
     /* Protéger l'accès à la hashmap */
     pthread_mutex_lock(&mut);
     {
@@ -136,10 +140,11 @@ void theora2SDL(struct streamstate *s) {
 	res =  th_decode_ycbcr_out(s->th_dec.ctx, videobuffer);
 
 	// Envoyer la taille de la fenêtre
+  printf("  ---------   draw theoraSDL 1     ------------ \n");
 	envoiTailleFenetre(videobuffer);
-
+  printf("  ---------   draw theoraSDL 2     ------------ \n");
 	attendreFenetreTexture();
-
+  printf("  ---------   draw theoraSDL 3     ------------ \n");
 	// copy the buffer
 	rect.w = videobuffer[0].width;
 	rect.h = videobuffer[0].height;
@@ -148,8 +153,8 @@ void theora2SDL(struct streamstate *s) {
 
 
     // 1 seul producteur/un seul conso => synchro sur le nb seulement
-
     debutDeposerTexture();
+    printf("  ---------   draw theoraSDL 4     ------------ \n");
 
 
     if (! once){
@@ -171,6 +176,8 @@ void theora2SDL(struct streamstate *s) {
     texturedate[tex_iwri].timems = framedate * 1000;
     assert(res == 0);
     tex_iwri = (tex_iwri + 1) % NBTEX;
+    printf("  ---------   draw theoraSDL 5     ------------ \n");
 
     finDeposerTexture();
+
 }
