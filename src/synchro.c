@@ -13,9 +13,11 @@ pthread_mutex_t mut ;
 pthread_mutex_t mut_taille;
 pthread_cond_t cond_taille;
 bool bool_taille = false;
-// Synchro pour Fenetre Texture
+// Synchro pour Fenetre
 pthread_mutex_t mut_Fen;
 pthread_cond_t cond_Fen;
+// Synchro pour Texture
+//pthread_cond_t cond_texture;
 
 /* l'implantation des fonctions de synchro ici */
 void envoiTailleFenetre(th_ycbcr_buffer buffer) {
@@ -59,6 +61,7 @@ void debutConsommerTexture() {
 }
 
 void finConsommerTexture() {
+
 }
 
 

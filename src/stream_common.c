@@ -68,6 +68,7 @@ struct streamstate *getStreamState(ogg_sync_state *pstate, ogg_page *ppage,
 	// proteger l'accès à la hashmap
   pthread_mutex_lock(&mut);
   {
+    printf(" ADD_INT in the hashmap: %d \n",serial);
 	if (type == TYPE_THEORA)
 	    HASH_ADD_INT( theorastrstate, serial, s );
 	else
@@ -84,8 +85,9 @@ struct streamstate *getStreamState(ogg_sync_state *pstate, ogg_page *ppage,
 	assert(s != NULL);
     }
     assert(s != NULL);
-
+    //printf("  ---------   end getStreamState    ------------ \n");
     return s;
+
 }
 
 int addPageGetPacket(ogg_page *ppage, struct streamstate *s) {
@@ -144,7 +146,7 @@ int decodeAllHeaders(int respac, struct streamstate *s, enum streamtype type) {
 		// lancement du thread gérant l'affichage (draw2SDL)
     pthread_t t1;
     pthread_create(&t1,NULL,draw2SDL,&(s->serial));
-    printf(" pthread_create draw2SDL \n");
+    printf(" pthread_create draw2SDL de serial %d  \n", s->serial);
 	        // inserer votre code ici !!
 
 		assert(res == 0);

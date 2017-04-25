@@ -23,7 +23,8 @@ SDL_Rect rect = {};
 struct streamstate *theorastrstate=NULL;
 
 void *draw2SDL(void *arg) {
-    int serial = (int) (long long int) arg;
+    int *serial = arg;
+    //printf(" SERIAL : %d\n\n", *serial);
     struct streamstate *s= NULL;
     SDL_Texture* texture = NULL;
     printf("   --------   draw pass 0      ---------  \n");
@@ -69,10 +70,13 @@ void *draw2SDL(void *arg) {
     /* Protéger l'accès à la hashmap */
     pthread_mutex_lock(&mut);
     {
-    HASH_FIND_INT( theorastrstate, &serial, s );
+      printf("  ---------   draw pass 7     ------------ \n");
+      //printf("  Recherche de %d dans le grape \n",*serial);
+
+    HASH_FIND_INT( theorastrstate, serial, s);
     }
     pthread_mutex_unlock(&mut);
-
+    printf("  ---------   draw pass 8     ------------ \n");
 
     assert(s->strtype == TYPE_THEORA);
 
@@ -176,7 +180,7 @@ void theora2SDL(struct streamstate *s) {
     texturedate[tex_iwri].timems = framedate * 1000;
     assert(res == 0);
     tex_iwri = (tex_iwri + 1) % NBTEX;
-    printf("  ---------   draw theoraSDL 5     ------------ \n");
+    printf(" ---------   draw theoraSDL 5     ------------ \n");
 
     finDeposerTexture();
 
