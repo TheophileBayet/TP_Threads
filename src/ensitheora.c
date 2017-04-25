@@ -81,6 +81,8 @@ void *draw2SDL(void *arg) {
     assert(s->strtype == TYPE_THEORA);
 
     while(! fini) {
+      printf("  ---------   draw pass 9     ------------ \n");
+
 	// récupérer les évenements de fin
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
